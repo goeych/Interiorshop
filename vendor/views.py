@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -66,8 +66,7 @@ def add_product(request):
             product.slug = slugify(product.title)
             product.save()
             return redirect('vendor_admin')
-        else:
-            Print('error')
+
     else:
         form = ProductForm()
         print("method != POST")
@@ -95,6 +94,20 @@ def edit_vendor(request):
     context = {'vendor':vendor}
     
     return render(request,'vendor/edit_vendor.html',context)
+
+def vendors(request):
+
+    vendors = Vendor.objects.all()
+    context = {'vendors':vendors}
+
+    return render(request,'vendor/vendors.html',context)
+
+def vendor(request,vendor_id):
+
+    vendor = get_object_or_404(Vendor,pk=vendor_id)
+    context = {'vendor':vendor}
+
+    return render(request,'vendor/vendor.html',context)
   
 
 

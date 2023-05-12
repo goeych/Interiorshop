@@ -1,0 +1,19 @@
+-create virtual enviroment and activate it
+-install django and create project (interiorshop)
+-create app for core views and add to installed apps
+(mkdir apps,mkdir apps/core, python manage.py startapp core apps/core)
+-add a simple formt page
+-add static files (static/main.css)
+
+-create app for vendors and add to installed apps
+-create database model for the vendors
+-create view,template and form for sign up
+-create simple area for vendors (for testing)
+
+-create app and models for products and categories
+-show list of products in the admin area
+-make it possible for vendors to add products
+
+-show newest products on the forntpage
+-show detail view of a product
+-show a category

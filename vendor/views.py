@@ -29,7 +29,7 @@ def become_vendor(request):
     context = {'form':form}
     return render(request,'vendor/become_vendor.html',context)
 
-
+@login_required
 def vendor_admin(request):
     vendor = request.user.vendor
     products = vendor.products.all()
@@ -54,7 +54,7 @@ def vendor_admin(request):
                }
     return render(request,'vendor/vendor_admin.html',context)
 
-
+@login_required
 def add_product(request):
     if request.method == "POST":
         form = ProductForm(request.POST,request.FILES)
@@ -74,6 +74,24 @@ def add_product(request):
     context = {'form':form}
     return render(request,'vendor/add_product.html',context)
 
+@login_required
+def edit_product(request,product_id):
+    vendor = request.user.vendor
+    product = vendor.products.get(pk=product_id)
+    if request.method == 'POST':
+        form = ProductForm(request.POST,request.FILES,instance=product)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('vendor_admin')
+    else:
+        form = ProductForm(instance=product)
+
+    context = {'form':form,'product':product}
+    return render(request,'vendor/edit_product.html',context)
+
+@login_required
 def edit_vendor(request):
     vendor = request.user.vendor
 
@@ -94,7 +112,7 @@ def edit_vendor(request):
     context = {'vendor':vendor}
     
     return render(request,'vendor/edit_vendor.html',context)
-
+@login_required
 def vendors(request):
 
     vendors = Vendor.objects.all()
